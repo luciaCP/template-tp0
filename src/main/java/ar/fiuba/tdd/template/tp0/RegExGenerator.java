@@ -24,7 +24,11 @@ public class RegExGenerator {
 
     private char getRandomChar() {
         Random ran = new Random();
-        return (char) (ran.nextInt(26) + 'a');
+        int randomInt = ran.nextInt(255);
+        while (randomInt == 0) {
+            randomInt = ran.nextInt(255);
+        }
+        return (char)randomInt;
     }
 
     private String generateStringFrom(String regEx) {
