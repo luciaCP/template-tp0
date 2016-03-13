@@ -22,15 +22,6 @@ public class RegExGenerator {
         return returnArray;
     }
 
-    private char getRandomChar() {
-        Random ran = new Random();
-        int randomInt = ran.nextInt(255);
-        while (randomInt == 0) {
-            randomInt = ran.nextInt(255);
-        }
-        return (char)randomInt;
-    }
-
     private String generateStringFrom(String regEx) {
         StringBuilder returnString = new StringBuilder();
 
@@ -41,9 +32,39 @@ public class RegExGenerator {
                 returnString.append(getRandomChar());
             }
 
+            if (currentChar == '[') {
+                ArrayList<Character> charSet = getSetWith(it);
+                returnString.append(getRandomCharFrom(charSet));
+            }
+
             currentChar = it.next();
         }
 
         return returnString.toString();
     }
+
+    private ArrayList<Character> getSetWith(StringCharacterIterator iterator) {
+        ArrayList<Character> randomCharList = new ArrayList<Character>();
+        char currentChar = iterator.next();
+        while (currentChar != ']') {
+            randomCharList.add(currentChar);
+            currentChar = iterator.next();
+        }
+        return  randomCharList;
+    }
+
+    private char getRandomChar() {
+        Random ran = new Random();
+        int randomInt = ran.nextInt(255);
+        while (randomInt == 0) {
+            randomInt = ran.nextInt(255);
+        }
+        return (char)randomInt;
+    }
+
+    private char getRandomCharFrom(ArrayList<Character> randomSet) {
+        Random ran = new Random();
+        return randomSet.get(ran.nextInt(randomSet.size()));
+    }
+
 }
