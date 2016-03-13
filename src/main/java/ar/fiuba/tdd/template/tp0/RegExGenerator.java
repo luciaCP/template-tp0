@@ -1,7 +1,9 @@
 package ar.fiuba.tdd.template.tp0;
 
+import java.text.StringCharacterIterator;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class RegExGenerator {
     private int maxLength;
@@ -11,12 +13,33 @@ public class RegExGenerator {
     }
 
     public List<String> generate(String regEx, int numberOfResults) {
-        return new ArrayList<String>() {
-            {
-                add("a");
-                add("b");
-                add("c");
+        ArrayList<String> returnArray =  new ArrayList<String>();
+
+        for (int iterator = 0; iterator < numberOfResults; iterator++){
+            returnArray.add(generateStringFrom(regEx));
+        }
+
+        return returnArray;
+    }
+
+    private char getRandomChar() {
+        Random ran = new Random();
+        return (char) (ran.nextInt(26) + 'a');
+    }
+
+    private String generateStringFrom(String regEx) {
+        StringBuilder returnString = new StringBuilder();
+
+        StringCharacterIterator it = new StringCharacterIterator(regEx);
+        char currentChar = it.first();
+        while (currentChar != it.DONE) {
+            if (currentChar == '.'){
+                returnString.append(getRandomChar());
             }
-        };
+
+            currentChar = it.next();
+        }
+
+        return returnString.toString();
     }
 }

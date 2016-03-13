@@ -30,12 +30,12 @@ public class RegExGeneratorTest {
         assertTrue(validate(".", 1));
     }
 
-/*    @Test
+    @Test
     public void testMultipleCharacters() {
         assertTrue(validate("...", 1));
     }
 
-    @Test
+/*    @Test
     public void testLiteral() {
         assertTrue(validate("\\@", 1));
     }
@@ -49,7 +49,6 @@ public class RegExGeneratorTest {
     public void testZeroOrOneCharacter() {
         assertTrue(validate("\\@.h?", 1));
     }
-*/
     @Test
     public void testCharacterSet() {
         assertTrue(validate("[abc]", 1));
@@ -59,5 +58,20 @@ public class RegExGeneratorTest {
     public void testCharacterSetWithQuantifiers() {
         assertTrue(validate("[abc]+", 1));
     }
-    // TODO: Add more tests!!!
+*/
+    /*
+    *  New tests
+    * */
+
+    @Test
+    public void testNoneCharacters() {
+        assertTrue(validate("...", 0));
+    }
+
+    @Test
+    public void testAnyMultipleCharacters() {
+        assertTrue(validate(".....", 6));
+    }
+
+
 }
