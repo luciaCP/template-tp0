@@ -1,5 +1,7 @@
 package ar.fiuba.tdd.template.tp0;
 
+import sun.rmi.runtime.Log;
+
 import java.text.StringCharacterIterator;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ public class RegExGenerator {
             returnArray.add(generateStringFrom(regEx));
         }
 
+        System.out.println(returnArray);
         return returnArray;
     }
 
@@ -30,11 +33,13 @@ public class RegExGenerator {
         while (currentChar != it.DONE) {
             if (currentChar == '.'){
                 returnString.append(getRandomChar());
-            }
-
-            if (currentChar == '[') {
+            } else if (currentChar == '[') {
                 ArrayList<Character> charSet = getSetWith(it);
                 returnString.append(getRandomCharFrom(charSet));
+            } else if (currentChar == '\\') {
+                returnString.append(getLiteralFrom(it));
+            } else {
+                returnString.append(currentChar);
             }
 
             currentChar = it.next();
@@ -55,10 +60,7 @@ public class RegExGenerator {
 
     private char getRandomChar() {
         Random ran = new Random();
-        int randomInt = ran.nextInt(255);
-        while (randomInt == 0) {
-            randomInt = ran.nextInt(255);
-        }
+        int randomInt = 1 + ran.nextInt(254);
         return (char)randomInt;
     }
 
@@ -67,4 +69,7 @@ public class RegExGenerator {
         return randomSet.get(ran.nextInt(randomSet.size()));
     }
 
+    private char getLiteralFrom(StringCharacterIterator iterator) {
+        return iterator.next();
+    }
 }

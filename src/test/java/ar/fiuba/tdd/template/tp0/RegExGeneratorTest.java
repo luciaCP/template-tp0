@@ -35,7 +35,7 @@ public class RegExGeneratorTest {
         assertTrue(validate("...", 1));
     }
 
-/*    @Test
+    @Test
     public void testLiteral() {
         assertTrue(validate("\\@", 1));
     }
@@ -45,7 +45,7 @@ public class RegExGeneratorTest {
         assertTrue(validate("\\@..", 1));
     }
 
-    @Test
+/*    @Test
     public void testZeroOrOneCharacter() {
         assertTrue(validate("\\@.h?", 1));
     }
@@ -65,7 +65,7 @@ public class RegExGeneratorTest {
     * */
 
     @Test
-    public void testNoneCharacters() {
+    public void testNoneString() {
         assertTrue(validate("...", 0));
     }
 
@@ -83,5 +83,10 @@ public class RegExGeneratorTest {
     public void testCharacterSet2() {
         assertTrue(validate("[!cy^]", 1));
     }
-
+/*
+    @Test
+    public void testAllLiterals(){
+        assertTrue(validate("\\@\\a\\@\\!\\[ac\\\\", 1));
+    }
+*/
 }
