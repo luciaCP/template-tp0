@@ -28,6 +28,7 @@ public class RegExGenerator {
     private String generateStringFrom(String regEx) {
         StringBuilder returnString = new StringBuilder();
 
+        int itMaxLength = this.maxLength;
         StringCharacterIterator it = new StringCharacterIterator(regEx);
         char currentChar = it.first();
         while (currentChar != it.DONE) {
