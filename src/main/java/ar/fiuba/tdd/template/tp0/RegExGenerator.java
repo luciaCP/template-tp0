@@ -91,7 +91,7 @@ public class RegExGenerator {
 
     private char getRandomChar() {
         Random ran = new Random();
-        int randomInt = 1 + ran.nextInt(254);
+        int randomInt = 33 + ran.nextInt(126-33);
         return (char)randomInt;
     }
 
