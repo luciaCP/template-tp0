@@ -45,21 +45,21 @@ public class RegExGeneratorTest {
         assertTrue(validate("\\@..", 1));
     }
 
-/*    @Test
+    @Test
     public void testZeroOrOneCharacter() {
         assertTrue(validate("\\@.h?", 1));
     }
-*/
+
     @Test
     public void testCharacterSet() {
         assertTrue(validate("[abc]", 1));
     }
-/*
+
     @Test
     public void testCharacterSetWithQuantifiers() {
         assertTrue(validate("[abc]+", 1));
     }
-*/
+
     /*
     *  New tests
     * */
@@ -83,10 +83,4 @@ public class RegExGeneratorTest {
     public void testCharacterSet2() {
         assertTrue(validate("[!cy^]", 1));
     }
-/*
-    @Test
-    public void testAllLiterals(){
-        assertTrue(validate("\\@\\a\\@\\!\\[ac\\\\", 1));
-    }
-*/
 }

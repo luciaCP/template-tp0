@@ -28,21 +28,51 @@ public class RegExGenerator {
     private String generateStringFrom(String regEx) {
         StringBuilder returnString = new StringBuilder();
 
-        int itMaxLength = this.maxLength;
         StringCharacterIterator it = new StringCharacterIterator(regEx);
         char currentChar = it.first();
         while (currentChar != it.DONE) {
-            if (currentChar == '.'){
-                returnString.append(getRandomChar());
+            int randomInt = getRandomIntFromCuantifier(it);
+
+            if (currentChar == '.') {
+                if (randomInt != -1) {
+                    for (int i = 0; i < randomInt; i++) {
+                        returnString.append(getRandomChar());
+                    }
+                } else {
+                    returnString.append(getRandomChar());
+                }
             } else if (currentChar == '[') {
                 ArrayList<Character> charSet = getSetWith(it);
-                returnString.append(getRandomCharFrom(charSet));
+                randomInt = getRandomIntFromCuantifier(it);
+                if (randomInt != -1) {
+                    for (int i = 0; i < randomInt; i++) {
+                        returnString.append(getRandomCharFrom(charSet));
+                    }
+                } else {
+                    returnString.append(getRandomCharFrom(charSet));
+                }
             } else if (currentChar == '\\') {
-                returnString.append(getLiteralFrom(it));
+                char literal = getLiteralFrom(it);
+                if (randomInt != -1) {
+                    for (int i = 0; i < randomInt; i++) {
+                        returnString.append(literal);
+                    }
+                } else {
+                    returnString.append(literal);
+                }
             } else {
-                returnString.append(currentChar);
+                if (randomInt != -1) {
+                    for (int i = 0; i < randomInt; i++) {
+                        returnString.append(currentChar);
+                    }
+                } else {
+                    returnString.append(currentChar);
+                }
             }
 
+            if (randomInt != -1) {
+                it.next(); // jump on cuantifier char
+            }
             currentChar = it.next();
         }
 
@@ -68,6 +98,43 @@ public class RegExGenerator {
     private char getRandomCharFrom(ArrayList<Character> randomSet) {
         Random ran = new Random();
         return randomSet.get(ran.nextInt(randomSet.size()));
+    }
+
+    private int getRandomIntFromCuantifier(StringCharacterIterator iterator) {
+        int returnValue = -1;
+        if (nextCharacterIsCuantifier(iterator)) {
+            char cuantifier = iterator.next();
+            int max = getMaxCharacters(cuantifier);
+            int min = getMinCharacters(cuantifier);
+            Random ran = new Random();
+            returnValue = min + ran.nextInt(max);
+            iterator.previous();
+        }
+
+        return returnValue;
+    }
+
+    private int getMaxCharacters(char cuantifierChar) {
+        if (cuantifierChar == '?') {
+            return 1;
+        } else if ((cuantifierChar == '*') || (cuantifierChar == '+')){
+            return maxLength;
+        }
+        return 0;
+    }
+
+    private int getMinCharacters(char cuantifierChar) {
+        if ((cuantifierChar == '*') ||(cuantifierChar == '?')) {
+            return 0;
+        } else if (cuantifierChar == '+'){
+            return 1;
+        }
+        return 0;
+    }
+    private boolean nextCharacterIsCuantifier(StringCharacterIterator iterator) {
+        char nextChar = iterator.next();
+        iterator.previous();
+        return ((nextChar == '?') || (nextChar == '*') || (nextChar == '+'));
     }
 
     private char getLiteralFrom(StringCharacterIterator iterator) {
