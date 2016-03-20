@@ -53,6 +53,7 @@ public class RegExGenerator {
                 }
             } else if (currentChar == '\\') {
                 char literal = getLiteralFrom(it);
+                randomInt = getRandomIntFromCuantifier(it);
                 if (randomInt != -1) {
                     for (int i = 0; i < randomInt; i++) {
                         returnString.append(literal);
@@ -89,9 +90,16 @@ public class RegExGenerator {
         return  randomCharList;
     }
 
+    private  Boolean isIlegalCharacter(int number){
+        if (number <= 0) return true;
+        return (number == 10 || number == 13 || number == 133);
+    }
     private char getRandomChar() {
         Random ran = new Random();
-        int randomInt = 33 + ran.nextInt(126-33);
+        int randomInt = 0;
+        while(isIlegalCharacter(randomInt)){
+            randomInt = 1 + ran.nextInt(254);
+        }
         return (char)randomInt;
     }
 

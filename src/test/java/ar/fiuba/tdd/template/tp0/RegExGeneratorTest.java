@@ -83,4 +83,41 @@ public class RegExGeneratorTest {
     public void testCharacterSet2() {
         assertTrue(validate("[!cy^]", 1));
     }
+
+    @Test
+    public void testCuantifierZeroToOneInLiterals() {
+        assertTrue(validate("a?$?@?", 1));
+    }
+
+    @Test
+    public void testCuantifierZeroToOneInLiteralsWithEscapeCharacter() {
+        assertTrue(validate("\\a?\\$?\\@?", 1));
+    }
+/*
+    @Test
+    public void testCuantifierZeroToMaxInLiterals() {
+        assertTrue(validate("a*$*@*", 1));
+    }
+
+    @Test
+    public void testCuantifierZeroToMaxInLiteralsWithEscapeCharacter() {
+        assertTrue(validate("\\a*\\$*\\@*", 1));
+    }
+
+    @Test
+    public void testCuantifierOneToMaxInLiterals() {
+        assertTrue(validate("a+$+@+", 1));
+    }
+
+    @Test
+    public void testCuantifierOneToMaxInLiteralsWithEscapeCharacter() {
+        assertTrue(validate("\\a+\\$+\\@+", 1));
+    }
+*/
+    @Test
+    public void testCuantifiersLikeLiterals() {
+        assertTrue(validate("\\?", 1));
+        assertTrue(validate("\\*", 1));
+        assertTrue(validate("\\+", 1));
+    }
 }
